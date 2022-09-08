@@ -19,8 +19,11 @@ func main() {
 		os.Exit(1)
 	}
 	w1 := goviz.NewWidget(2, 2, 20, 5, termbox.ColorRed, termbox.ColorBlue, "")
+	w1.IsBorder = true
+	w1.BorderFore=termbox.ColorYellow
+	w1.BorderBack=termbox.ColorWhite
 	w1.Redraw()
 	goviz.Update()
-	time.Sleep(time.Second * 3)
+	time.Sleep(time.Second * 10)
 	goviz.Close()
 }

@@ -4,11 +4,14 @@ import "github.com/nsf/termbox-go"
 
 // Widget -- базовый виджет для отрисовки
 type Widget struct {
-	pos      Pos  // Позиция виджета на экране
-	size     Size // Размеры виджета
-	foreAttr termbox.Attribute
-	backAttr termbox.Attribute
-	litFill  rune
+	pos        Pos  // Позиция виджета на экране
+	size       Size // Размеры виджета
+	foreAttr   termbox.Attribute
+	backAttr   termbox.Attribute
+	BorderFore termbox.Attribute
+	BorderBack termbox.Attribute
+	litFill    rune
+	IsBorder   bool // Граница виджета
 }
 
 // NewWidget -- возвращает новый виджет
@@ -35,9 +38,20 @@ func NewWidget(posX APosX, posY APosY, sizeX ASizeX, sizeY ASizeY, foreAttr, bac
 
 // Redraw -- перерисовывает виджет на экране
 func (sf *Widget) Redraw() {
-	for x := sf.pos.X; x < APosX(sf.size.X); x++ {
+	for x := sf.pos.X; x < sf.pos.X+APosX(sf.size.X); x++ {
 		for y := sf.pos.Y; y < APosY(sf.size.Y); y++ {
 			OutLit(x, y, sf.foreAttr, sf.backAttr, sf.litFill)
 		}
+	}
+	if !sf.IsBorder {
+		return
+	}
+	// Прочертить верхнюю границу
+	for x := sf.pos.X; x < sf.pos.X+APosX(sf.size.X); x++ {
+		OutLit(x, sf.pos.Y, sf.BorderFore, sf.BorderBack, []rune("#")[0])
+	}
+	// Прочертить нижнюю границу
+	for x := sf.pos.X; x < sf.pos.X+APosX(sf.size.X); x++ {
+		OutLit(x, sf.pos.Y+APosY(sf.size.Y)-2, sf.BorderFore, sf.BorderBack, []rune("#")[0])
 	}
 }
