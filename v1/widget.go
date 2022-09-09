@@ -2,6 +2,7 @@ package goviz
 
 import (
 	"github.com/nsf/termbox-go"
+	"github.com/prospero78/goviz/v1/alias"
 	"github.com/prospero78/goviz/v1/lit"
 	"github.com/prospero78/goviz/v1/pos"
 	"github.com/prospero78/goviz/v1/size"
@@ -22,8 +23,8 @@ type Widget struct {
 }
 
 // NewWidget -- возвращает новый виджет
-func NewWidget(posX pos.APosX, posY pos.APosY,
-	sizeX size.ASizeX, sizeY size.ASizeY,
+func NewWidget(posX alias.APosX, posY alias.APosY,
+	sizeX alias.ASizeX, sizeY alias.ASizeY,
 	foreAttr, backAttr termbox.Attribute,
 	litFill lit.ALit) *Widget {
 	var _litFill rune
@@ -48,8 +49,8 @@ func NewWidget(posX pos.APosX, posY pos.APosY,
 
 // Redraw -- перерисовывает виджет на экране
 func (sf *Widget) Redraw() {
-	for x := sf.pos.X; x < sf.pos.X+pos.APosX(sf.size.X); x++ {
-		for y := sf.pos.Y; y < pos.APosY(sf.size.Y); y++ {
+	for x := sf.pos.X; x < sf.pos.X+alias.APosX(sf.size.X); x++ {
+		for y := sf.pos.Y; y < alias.APosY(sf.size.Y); y++ {
 			// OutLit(x, y, sf.foreAttr, sf.backAttr, sf.litFill)
 		}
 	}
@@ -57,11 +58,11 @@ func (sf *Widget) Redraw() {
 		return
 	}
 	// Прочертить верхнюю границу
-	for x := sf.pos.X; x < sf.pos.X+pos.APosX(sf.size.X); x++ {
+	for x := sf.pos.X; x < sf.pos.X+alias.APosX(sf.size.X); x++ {
 		// OutLit(x, sf.pos.Y, sf.BorderFore, sf.BorderBack, []rune("#")[0])
 	}
 	// Прочертить нижнюю границу
-	for x := sf.pos.X; x < sf.pos.X+pos.APosX(sf.size.X); x++ {
+	for x := sf.pos.X; x < sf.pos.X+alias.APosX(sf.size.X); x++ {
 		// OutLit(x, sf.pos.Y+APosY(sf.size.Y)-2, sf.BorderFore, sf.BorderBack, []rune("#")[0])
 	}
 }

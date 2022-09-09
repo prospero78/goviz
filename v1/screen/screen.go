@@ -6,6 +6,7 @@ import (
 
 	"github.com/nsf/termbox-go"
 
+	"github.com/prospero78/goviz/v1/alias"
 	"github.com/prospero78/goviz/v1/safebool"
 	"github.com/prospero78/goviz/v1/size"
 	"github.com/prospero78/goviz/v1/ticker"
@@ -45,8 +46,8 @@ func GetScreen() (*Screen, error) {
 	}
 	scr.isWork.Set()
 	scrX, scrY := termbox.Size()
-	scr.size.X = size.ASizeX(scrX)
-	scr.size.Y = size.ASizeY(scrY)
+	scr.size.X = alias.ASizeX(scrX)
+	scr.size.Y = alias.ASizeY(scrY)
 	// Тут надо запустить тикер!!!!
 	go scr.run()
 	return scr, nil

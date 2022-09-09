@@ -1,13 +1,30 @@
+// package size -- размеры объекта
+//   Размеры не могут быть меньше 0
 package size
 
-// ASizeX -- размер по Х
-type ASizeX int
+import (
+	"fmt"
 
-// ASizeY -- позиция по Y
-type ASizeY int
+	"github.com/prospero78/goviz/v1/alias"
+)
 
 // Size -- размер виджета на экране
 type Size struct {
-	X ASizeX // Размер по X
-	Y ASizeY // Размер по Y
+	x alias.ASizeX // Размер по X
+	y alias.ASizeY // Размер по Y
+}
+
+// NewSize -- возвращает новый размер объекта
+func NewSize(x alias.ASizeX, y alias.ASizeY) (*Size, error) {
+	{ // Предусловия
+
+		if y < 0 {
+			return nil, fmt.Errorf("NewSize(): y(%v)<0", x)
+		}
+	}
+	sf := &Size{
+		x: x,
+		y: y,
+	}
+	return sf, nil
 }

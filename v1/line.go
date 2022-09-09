@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/nsf/termbox-go"
+	"github.com/prospero78/goviz/v1/alias"
 	"github.com/prospero78/goviz/v1/lit"
 	"github.com/prospero78/goviz/v1/pos"
 )
@@ -54,8 +55,8 @@ func (sf *Line) Redraw() {
 func (sf *Line) redrawVert() {
 	_, scrY := termbox.Size()
 	sf.LitFill.Pos.X = sf.Pos.X
-	for y := sf.Pos.Y; y < pos.APosY(sf.Len); y++ {
-		if y >= pos.APosY(scrY) {
+	for y := sf.Pos.Y; y < alias.APosY(sf.Len); y++ {
+		if y >= alias.APosY(scrY) {
 			return
 		}
 		sf.LitFill.Pos.Y = y
@@ -67,8 +68,8 @@ func (sf *Line) redrawVert() {
 func (sf *Line) redrawHor() {
 	scrX, _ := termbox.Size()
 	sf.LitFill.Pos.Y = sf.Pos.Y
-	for x := sf.Pos.X; x < pos.APosX(sf.Len); x++ {
-		if x >= pos.APosX(scrX) {
+	for x := sf.Pos.X; x < alias.APosX(sf.Len); x++ {
+		if x >= alias.APosX(scrX) {
 			return
 		}
 		sf.LitFill.Pos.X = x
