@@ -6,8 +6,8 @@ import (
 	"fmt"
 
 	"github.com/prospero78/goviz/v1/alias"
-	"github.com/prospero78/goviz/v1/sizex"
-	"github.com/prospero78/goviz/v1/sizey"
+	"github.com/prospero78/goviz/v1/size/sizex"
+	"github.com/prospero78/goviz/v1/size/sizey"
 	"github.com/prospero78/goviz/v1/types"
 )
 

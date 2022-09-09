@@ -1,6 +1,9 @@
 package types
 
-import "github.com/nsf/termbox-go"
+import (
+	"github.com/nsf/termbox-go"
+	"github.com/prospero78/goviz/v1/alias"
+)
 
 // IScreen -- интерфейс к экрану
 type IScreen interface {
@@ -14,4 +17,6 @@ type IScreen interface {
 	Fill(lit string, foreAttr, backAttr termbox.Attribute)
 	// IsWork -- возвращает признак работы экрана
 	IsWork() bool
+	// Size -- возвращает размеры экрана
+	Size() (alias.ASizeX, alias.ASizeY)
 }

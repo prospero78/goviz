@@ -5,6 +5,7 @@ import (
 
 	"github.com/nsf/termbox-go"
 	"github.com/prospero78/goviz/v1/alias"
+	"github.com/prospero78/goviz/v1/line"
 	"github.com/prospero78/goviz/v1/pos"
 	"github.com/prospero78/goviz/v1/size"
 	"github.com/prospero78/goviz/v1/types"
@@ -16,10 +17,10 @@ type Widget struct {
 	size        types.ISize // Размеры виджета
 	foreAttr    termbox.Attribute
 	backAttr    termbox.Attribute
-	BorderLeft  Line // Левая граница виджета
-	BorderRight Line // Правая граница виджета
-	BorderTop   Line // Верхняя граница виджета
-	BorderDown  Line // Нижняя граница виджета
+	BorderLeft  line.Line // Левая граница виджета
+	BorderRight line.Line // Правая граница виджета
+	BorderTop   line.Line // Верхняя граница виджета
+	BorderDown  line.Line // Нижняя граница виджета
 	litFill     rune
 	IsBorder    bool // Граница виджета
 }

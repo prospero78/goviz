@@ -15,3 +15,9 @@ type ASizeY int
 
 // ALit -- литера
 type ALit string
+
+// ALen -- длина
+type ALen int
+
+// ADirect -- направление (горизонтальное/вертикальное)
+type ADirect int

@@ -11,7 +11,7 @@ import (
 	"github.com/prospero78/goviz/v1/lit"
 	"github.com/prospero78/goviz/v1/pos"
 	"github.com/prospero78/goviz/v1/safebool"
-	"github.com/prospero78/goviz/v1/size"
+	"github.com/prospero78/goviz/v1/screen/sync_size"
 	"github.com/prospero78/goviz/v1/ticker"
 	"github.com/prospero78/goviz/v1/types"
 )
@@ -50,7 +50,7 @@ func GetScreen() (types.IScreen, error) {
 	}
 	scr.isWork.Set()
 	scrX, scrY := termbox.Size()
-	size, err := size.NewSize(alias.ASizeX(scrX), alias.ASizeY(scrY))
+	size, err := sync_size.NewSyncSize(alias.ASizeX(scrX), alias.ASizeY(scrY))
 	if err != nil {
 		scr.Close()
 		return nil, fmt.Errorf("GetScreen(): in create ISize, err=\n\t%w", err)
@@ -59,6 +59,11 @@ func GetScreen() (types.IScreen, error) {
 	// Тут надо запустить тикер!!!!
 	go scr.run()
 	return scr, nil
+}
+
+// Size -- возвращает размеры экрана
+func (sf *Screen) Size() (alias.ASizeX, alias.ASizeY) {
+	return sf.size.Get()
 }
 
 // Redraw -- перерисовывает экран по требованию
@@ -108,9 +113,15 @@ func (sf *Screen) Close() {
 // Главный цикл работы экрана
 func (sf *Screen) run() {
 	for sf.isWork.Get() {
-		<-sf.chClose // Сигнал закрытия экрана
-		sf.isWork.Reset()
-		termbox.Close()
-		return
+		select {
+		case <-sf.chClose: // Сигнал закрытия экрана
+			sf.isWork.Reset()
+			termbox.Close()
+			return
+		case <-sf.ticker.Wait(): // Ожидание тика
+			sizeX, sizeY := termbox.Size()
+			sf.size.Set(alias.ASizeX(sizeX), alias.ASizeY(sizeY))
+		}
+
 	}
 }

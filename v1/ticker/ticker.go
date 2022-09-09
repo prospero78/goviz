@@ -44,8 +44,8 @@ func (sf *Ticker) gener() {
 }
 
 // Wait -- ожидание тика (блокирующий вызов)
-func (sf *Ticker) Wait() {
-	<-sf.chWait
+func (sf *Ticker) Wait() <-chan int {
+	return sf.chWait
 }
 
 // Close -- закрывает тикер по требованию
