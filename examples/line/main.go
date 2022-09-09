@@ -84,7 +84,7 @@ func main() {
 			logrus.WithError(err).Errorln("line: in create ILit")
 			return
 		}
-		litEnd, err := lit.NewLit(screen, _posLit3, termbox.ColorRed, termbox.ColorYellow, "x")
+		litEnd, err := lit.NewLit(screen, _posLit3, termbox.ColorRed, termbox.ColorBlue, ">")
 		if err != nil {
 			logrus.WithError(err).Errorln("line: in create ILit")
 			return

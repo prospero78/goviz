@@ -110,7 +110,6 @@ func (sf *Line) redrawEnd() {
 		return
 	}
 	x, y := sf.pos.Get()
-	fmt.Printf("Line.redrawEnd(): x=%v,y=%v\n", x, y)
 	if sf.Direct == cons.DirectHor {
 		x += alias.APosX(sf.Len) - 1
 	} else {
