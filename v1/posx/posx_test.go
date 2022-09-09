@@ -5,12 +5,11 @@ import (
 )
 
 /*
-	Тест для размера объекта по горизонтали
+	Тест для положения объекта по горизонтали
 */
 
 type tester struct {
 	t   *testing.T
-	err error
 	sz  *PosX
 }
 
@@ -31,7 +30,7 @@ func (sf *tester) set() {
 	}
 }
 
-// Создание объекта размера по горизонтали
+// Создание объекта положения по горизонтали
 func (sf *tester) create() {
 	sf.t.Logf("=create=")
 	sf.createGood1()
