@@ -14,13 +14,15 @@ import (
 )
 
 func main() {
-	screen, err :=screen.GetScreen()
+	screen, err := screen.GetScreen()
 	if err != nil {
 		logrus.WithError(err).Errorln("screen.go/main(): in get screen")
 		os.Exit(1)
 	}
 	defer screen.Close()
+
 	screen.Clear()
-	screen.Fill("*", termbox.ColorBlack, termbox.ColorGreen)
+	strLit := string(rune(9618))
+	screen.Fill(strLit, termbox.ColorLightGreen, termbox.ColorBlack)
 	time.Sleep(time.Second * 3)
 }
