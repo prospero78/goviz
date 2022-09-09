@@ -7,7 +7,7 @@ type APosX int
 type APosY int
 
 // Pos -- позиция элемента на экране
-type Pos struct{
+type Pos struct {
 	X APosX // Позиция по X
 	Y APosY // Позиция по Y
 }

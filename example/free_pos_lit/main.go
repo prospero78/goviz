@@ -14,16 +14,20 @@ import (
 )
 
 func main() {
-	if err := goviz.New(); err != nil {
+	screen, err := goviz.GetScreen()
+	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	goviz.OutLit(2, 2, termbox.ColorRed, termbox.ColorDefault, []rune("+")[0])
-	goviz.OutLit(4, 3, termbox.ColorGreen, termbox.ColorDefault, []rune("#")[0])
-	goviz.OutLit(6, 4, termbox.ColorBlue, termbox.ColorDefault, []rune("*")[0])
-	goviz.Update()
+	lit := goviz.NewLit(goviz.Pos{X: 2, Y: 2}, termbox.ColorWhite, termbox.ColorBlue, "#")
+	lit.Redraw()
+	lit1 := goviz.NewLit(goviz.Pos{X: 4, Y: 3}, termbox.ColorWhite, termbox.ColorDefault, "5")
+	lit1.Redraw()
+	lit2 := goviz.NewLit(goviz.Pos{X: 6, Y: 4}, termbox.ColorBlue, termbox.ColorDefault, "^")
+	lit2.Redraw()
+	screen.Redraw()
 
 	time.Sleep(time.Second * 3)
-	goviz.Close()
+	screen.Close()
 }
