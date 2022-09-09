@@ -23,7 +23,7 @@ type IPos interface{
 	// Get -- возвращает позицию на экране
 	Get()(alias.APosX,alias.APosY)
 	// Set -- устанавливает позицию на экране
-	Set(alias.APosX,alias.APosY)error
+	Set(alias.APosX,alias.APosY)
 	// PosX -- возвращает объект позиции по Х
 	PosX()IPosX
 	// PosY -- возвращает объект позиции по Y

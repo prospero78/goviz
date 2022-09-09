@@ -8,11 +8,11 @@ import (
 
 // PosY -- положение объекта по оси Y
 type PosY struct {
-	val alias.ASizeY
+	val alias.APosY
 }
 
 // NewPosY -- возвращает новое положение по горизонтали
-func NewPosY(Y alias.ASizeY) *PosY {
+func NewPosY(Y alias.APosY) *PosY {
 	sf := &PosY{
 		val: Y,
 	}
@@ -20,11 +20,11 @@ func NewPosY(Y alias.ASizeY) *PosY {
 }
 
 // Get -- возвращает хранимое значение
-func (sf *PosY) Get() alias.ASizeY {
+func (sf *PosY) Get() alias.APosY {
 	return sf.val
 }
 
 // Set -- устанавливает хранимое значение
-func (sf *PosY) Set(val alias.ASizeY) {
+func (sf *PosY) Set(val alias.APosY) {
 	sf.val = val
 }

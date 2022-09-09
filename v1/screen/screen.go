@@ -27,13 +27,13 @@ type Screen struct {
 }
 
 var (
-	scr *Screen // Глобальный объект экрана
+	Scr types.IScreen // Глобальный объект экрана
 )
 
 // GetScreen -- возвращает новый экран
 func GetScreen() (types.IScreen, error) {
-	if scr != nil {
-		return scr, nil
+	if Scr != nil {
+		return Scr, nil
 	}
 	err := termbox.Init()
 	if err != nil {
@@ -75,15 +75,14 @@ func (sf *Screen) IsWork() bool {
 
 // Fill -- заливает экран указанными атрибутами
 func (sf *Screen) Fill(_lit string, foreAttr, backAttr termbox.Attribute) {
-	lit, err := lit.NewLit(sf, pos.Pos{X: 0, Y: 0}, foreAttr, backAttr, lit.ALit(_lit))
+	lit, err := lit.NewLit(sf, pos.NewPos(0, 0), foreAttr, backAttr, lit.ALit(_lit))
 	if err != nil {
 		logrus.WithError(err).Errorln("Screen.Fill(): in create ILit")
 		return
 	}
 	for x := 0; x < int(sf.size.SizeX().Get()); x++ {
 		for y := 0; y < int(sf.size.SizeY().Get()); y++ {
-			lit.Pos.X = alias.APosX(x)
-			lit.Pos.Y = alias.APosY(y)
+			lit.Pos().Set(alias.APosX(x), alias.APosY(y))
 			lit.Redraw()
 		}
 	}
