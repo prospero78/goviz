@@ -12,3 +12,6 @@ type ASizeX int
 
 // ASizeY -- позиция по Y
 type ASizeY int
+
+// ALit -- литера
+type ALit string

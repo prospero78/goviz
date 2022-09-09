@@ -4,7 +4,6 @@
 package main
 
 import (
-	"os"
 	"time"
 
 	"github.com/nsf/termbox-go"
@@ -17,7 +16,7 @@ func main() {
 	screen, err := screen.GetScreen()
 	if err != nil {
 		logrus.WithError(err).Errorln("screen.go/main(): in get screen")
-		os.Exit(1)
+		return
 	}
 	defer screen.Close()
 

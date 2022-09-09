@@ -5,7 +5,6 @@ import (
 
 	"github.com/nsf/termbox-go"
 	"github.com/prospero78/goviz/v1/alias"
-	"github.com/prospero78/goviz/v1/lit"
 	"github.com/prospero78/goviz/v1/pos"
 	"github.com/prospero78/goviz/v1/size"
 	"github.com/prospero78/goviz/v1/types"
@@ -29,7 +28,7 @@ type Widget struct {
 func NewWidget(posX alias.APosX, posY alias.APosY,
 	sizeX alias.ASizeX, sizeY alias.ASizeY,
 	foreAttr, backAttr termbox.Attribute,
-	litFill lit.ALit) (*Widget, error) {
+	litFill alias.ALit) (*Widget, error) {
 	var _litFill rune
 	if litFill == "" {
 		_litFill = []rune(" ")[0]

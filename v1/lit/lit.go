@@ -4,11 +4,9 @@ import (
 	"fmt"
 
 	"github.com/nsf/termbox-go"
+	"github.com/prospero78/goviz/v1/alias"
 	"github.com/prospero78/goviz/v1/types"
 )
-
-// ALit -- литера
-type ALit string
 
 // Lit -- литера на экране
 type Lit struct {
@@ -20,7 +18,7 @@ type Lit struct {
 }
 
 // NewLit -- возвращает новую литеру
-func NewLit(scr types.IScreen, pos types.IPos, foreAttr, backAttr termbox.Attribute, lit ALit) (*Lit, error) {
+func NewLit(scr types.IScreen, pos types.IPos, foreAttr, backAttr termbox.Attribute, lit alias.ALit) (*Lit, error) {
 	{ // Предусловия
 		if scr == nil {
 			return nil, fmt.Errorf("NewLit(): IScreen == nil")

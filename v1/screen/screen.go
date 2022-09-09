@@ -75,7 +75,7 @@ func (sf *Screen) IsWork() bool {
 
 // Fill -- заливает экран указанными атрибутами
 func (sf *Screen) Fill(_lit string, foreAttr, backAttr termbox.Attribute) {
-	lit, err := lit.NewLit(sf, pos.NewPos(0, 0), foreAttr, backAttr, lit.ALit(_lit))
+	lit, err := lit.NewLit(sf, pos.NewPos(0, 0), foreAttr, backAttr, alias.ALit(_lit))
 	if err != nil {
 		logrus.WithError(err).Errorln("Screen.Fill(): in create ILit")
 		return
