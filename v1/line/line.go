@@ -12,12 +12,14 @@ import (
 
 // Line -- линия на экране
 type Line struct {
-	scr       types.IScreen
-	IsVisible bool          // Признак видимости линии
-	LitFill   *lit.Lit      // Литера заполнителя
-	pos       types.IPos    // Позиция линии
-	Len       alias.ALen    // Длина линии
-	Direct    alias.ADirect // Направление линии
+	scr types.IScreen
+	// isVisible bool          // Признак видимости линии
+	LitFill  *lit.Lit      // Литера заполнителя
+	LitBegin *lit.Lit      // Литера начала
+	LitEnd   *lit.Lit      // Линия окончания
+	pos      types.IPos    // Позиция линии
+	Len      alias.ALen    // Длина линии
+	Direct   alias.ADirect // Направление линии
 }
 
 // NewLine -- возвращает новую линию
@@ -55,26 +57,65 @@ func (sf *Line) Redraw() {
 // Перерисовывает линию вертикально
 func (sf *Line) redrawVert() {
 	_, scrY := sf.scr.Size()
-	sf.LitFill.Pos().PosX().Set(sf.pos.PosX().Get())
-	for y := sf.pos.PosY().Get(); y < alias.APosY(sf.Len); y++ {
+	selfPosX := sf.pos.PosX()
+	selfPosY := sf.pos.PosY()
+	litPosX := sf.LitFill.Pos().PosX()
+	litPosY := sf.LitFill.Pos().PosY()
+
+	litPosX.Set(selfPosX.Get())
+	for y := selfPosY.Get(); y < selfPosY.Get()+alias.APosY(sf.Len); y++ {
 		if y >= alias.APosY(scrY) {
 			return
 		}
-		sf.LitFill.Pos().PosY().Set(y)
+		litPosY.Set(y)
 		sf.LitFill.Redraw()
 	}
+	sf.redrawBeg()
+	sf.redrawEnd()
 }
 
 // Перерисовывает линию горизонтально
 func (sf *Line) redrawHor() {
 	scrX, _ := termbox.Size()
-	sf.LitFill.Pos().PosY().Set(sf.pos.PosY().Get())
-	posX := sf.pos.PosX().Get()
-	for x := posX; x < alias.APosX(sf.Len); x++ {
+	selfPosX := sf.pos.PosX()
+	selfPosY := sf.pos.PosY()
+	litPosX := sf.LitFill.Pos().PosX()
+	litPosY := sf.LitFill.Pos().PosY()
+
+	litPosY.Set(selfPosY.Get())
+	for x := selfPosX.Get(); x < selfPosX.Get()+alias.APosX(sf.Len); x++ {
 		if x >= alias.APosX(scrX) {
 			return
 		}
-		sf.LitFill.Pos().PosX().Set(x)
+		litPosX.Set(x)
 		sf.LitFill.Redraw()
 	}
+	sf.redrawBeg()
+	sf.redrawEnd()
+}
+
+// Перерисовывает литеру начала (если есть)
+func (sf *Line) redrawBeg() {
+	if sf.LitBegin == nil {
+		return
+	}
+	x, y := sf.pos.Get()
+	sf.LitBegin.Pos().Set(x, y)
+	sf.LitBegin.Redraw()
+}
+
+// Перерисовывает литеру конца (если есть)
+func (sf *Line) redrawEnd() {
+	if sf.LitEnd == nil {
+		return
+	}
+	x, y := sf.pos.Get()
+	fmt.Printf("Line.redrawEnd(): x=%v,y=%v\n", x, y)
+	if sf.Direct == cons.DirectHor {
+		x += alias.APosX(sf.Len) - 1
+	} else {
+		y += alias.APosY(sf.Len) - 1
+	}
+	sf.LitEnd.Pos().Set(x, y)
+	sf.LitEnd.Redraw()
 }
