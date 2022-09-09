@@ -21,8 +21,8 @@ type ISizeY interface{
 
 // ISize -- интерфейс к размеру объекта
 type ISize interface{
-	// Size -- возвращает размеры по X, Y
-	Size()(alias.ASizeX, alias.ASizeY)
+	// Get -- возвращает размеры по X, Y
+	Get()(alias.ASizeX, alias.ASizeY)
 	// Set -- устанавливает размеры объекта
 	Set(alias.ASizeX, alias.ASizeY)error
 	// SizeX -- возвращает объект размера по X

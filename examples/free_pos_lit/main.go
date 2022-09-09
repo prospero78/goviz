@@ -21,20 +21,21 @@ func main() {
 		logrus.WithError(err).Errorln("free_pos_let: in get screen")
 		os.Exit(1)
 	}
+	defer screen.Close()
 
-	lit0, err := lit.NewLit(pos.Pos{X: 2, Y: 2}, termbox.ColorWhite, termbox.ColorBlue, "#")
+	lit0, err := lit.NewLit(screen, pos.Pos{X: 2, Y: 2}, termbox.ColorWhite, termbox.ColorBlue, "#")
 	if err != nil {
 		logrus.WithError(err).Errorln("free_pos_let: in create lit0")
 		os.Exit(1)
 	}
 	lit0.Redraw()
-	lit1, err := lit.NewLit(pos.Pos{X: 4, Y: 3}, termbox.ColorWhite, termbox.ColorDefault, "5")
+	lit1, err := lit.NewLit(screen, pos.Pos{X: 4, Y: 3}, termbox.ColorWhite, termbox.ColorDefault, "5")
 	if err != nil {
 		logrus.WithError(err).Errorln("free_pos_let: in create lit1")
 		os.Exit(1)
 	}
 	lit1.Redraw()
-	lit2, err := lit.NewLit(pos.Pos{X: 6, Y: 4}, termbox.ColorBlue, termbox.ColorDefault, "^")
+	lit2, err := lit.NewLit(screen, pos.Pos{X: 6, Y: 4}, termbox.ColorBlue, termbox.ColorDefault, "^")
 	if err != nil {
 		logrus.WithError(err).Errorln("free_pos_let: in create lit2")
 		os.Exit(1)
@@ -43,5 +44,4 @@ func main() {
 	screen.Redraw()
 
 	time.Sleep(time.Second * 3)
-	screen.Close()
 }

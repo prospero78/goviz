@@ -5,16 +5,20 @@ import (
 	"time"
 
 	"github.com/nsf/termbox-go"
+	"github.com/sirupsen/logrus"
 
 	"github.com/prospero78/goviz/v1/alias"
+	"github.com/prospero78/goviz/v1/lit"
+	"github.com/prospero78/goviz/v1/pos"
 	"github.com/prospero78/goviz/v1/safebool"
 	"github.com/prospero78/goviz/v1/size"
 	"github.com/prospero78/goviz/v1/ticker"
+	"github.com/prospero78/goviz/v1/types"
 )
 
 // Screen -- глобальный объект экрана.
 type Screen struct {
-	size     size.Size          // Размер экрана
+	size     types.ISize        // Размер экрана
 	isWork   *safebool.SafeBool // Потокобезопасный признак работы экрана
 	chClose  chan int           // Канал закрытия экрана
 	ForeAttr termbox.Attribute  // Атрибуты литеры
@@ -27,7 +31,7 @@ var (
 )
 
 // GetScreen -- возвращает новый экран
-func GetScreen() (*Screen, error) {
+func GetScreen() (types.IScreen, error) {
 	if scr != nil {
 		return scr, nil
 	}
@@ -46,8 +50,12 @@ func GetScreen() (*Screen, error) {
 	}
 	scr.isWork.Set()
 	scrX, scrY := termbox.Size()
-	scr.size.X = alias.ASizeX(scrX)
-	scr.size.Y = alias.ASizeY(scrY)
+	size, err := size.NewSize(alias.ASizeX(scrX), alias.ASizeY(scrY))
+	if err != nil {
+		scr.Close()
+		return nil, fmt.Errorf("GetScreen(): in create ISize, err=\n\t%w", err)
+	}
+	scr.size = size
 	// Тут надо запустить тикер!!!!
 	go scr.run()
 	return scr, nil
@@ -63,6 +71,23 @@ func (sf *Screen) Redraw() {
 // IsWork -- возвращает признак работы экрана
 func (sf *Screen) IsWork() bool {
 	return sf.isWork.Get()
+}
+
+// Fill -- заливает экран указанными атрибутами
+func (sf *Screen) Fill(_lit string, foreAttr, backAttr termbox.Attribute) {
+	lit, err := lit.NewLit(sf, pos.Pos{X: 0, Y: 0}, foreAttr, backAttr, lit.ALit(_lit))
+	if err != nil {
+		logrus.WithError(err).Errorln("Screen.Fill(): in create ILit")
+		return
+	}
+	for x := 0; x < int(sf.size.SizeX().Get()); x++ {
+		for y := 0; y < int(sf.size.SizeY().Get()); y++ {
+			lit.Pos.X = alias.APosX(x)
+			lit.Pos.Y = alias.APosY(y)
+			lit.Redraw()
+		}
+	}
+	sf.Redraw()
 }
 
 // Clear -- очищает экран
