@@ -17,7 +17,7 @@ type SizeX struct {
 func NewSizeX(x alias.ASizeX) (*SizeX, error) {
 	sf := &SizeX{}
 	if err := sf.Set(x); err != nil {
-		return nil, fmt.Errorf("NewSize(): in set size, err=\n\t%w", err)
+		return nil, fmt.Errorf("NewSizeX(): in set size, err=\n\t%w", err)
 	}
 	return sf, nil
 }
