@@ -1,19 +1,24 @@
-package goviz
+package screen
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/nsf/termbox-go"
+
+	"github.com/prospero78/goviz/v1/safebool"
+	"github.com/prospero78/goviz/v1/size"
+	"github.com/prospero78/goviz/v1/ticker"
 )
 
 // Screen -- глобальный объект экрана.
 type Screen struct {
-	size     Size              // Размер экрана
-	isWork   *SafeBool         // Потокобезопасный признак работы экрана
-	chClose  chan int          // Канал закрытия экрана
-	ForeAttr termbox.Attribute // Атрибуты литеры
-	BackAttr termbox.Attribute // Атрибуты знакоместа
-	ticker   *Ticker           // Тикер обновления экрана
+	size     size.Size          // Размер экрана
+	isWork   *safebool.SafeBool // Потокобезопасный признак работы экрана
+	chClose  chan int           // Канал закрытия экрана
+	ForeAttr termbox.Attribute  // Атрибуты литеры
+	BackAttr termbox.Attribute  // Атрибуты знакоместа
+	ticker   *ticker.Ticker     // Тикер обновления экрана
 }
 
 var (
@@ -29,19 +34,19 @@ func GetScreen() (*Screen, error) {
 	if err != nil {
 		return nil, fmt.Errorf("goviz.GetScreen(): in init termbox=\n\t%w", err)
 	}
-	ticker, err := NewTicker(20)
+	ticker, err := ticker.NewTicker(20)
 	if err != nil {
 		return nil, fmt.Errorf("goviz.GetScreen(): in create ticker, err=%w", err)
 	}
 	scr := &Screen{
-		isWork:  NewSafeBool(),
+		isWork:  safebool.NewSafeBool(),
 		chClose: make(chan int, 2),
 		ticker:  ticker,
 	}
 	scr.isWork.Set()
 	scrX, scrY := termbox.Size()
-	scr.size.X = ASizeX(scrX)
-	scr.size.Y = ASizeY(scrY)
+	scr.size.X = size.ASizeX(scrX)
+	scr.size.Y = size.ASizeY(scrY)
 	// Тут надо запустить тикер!!!!
 	go scr.run()
 	return scr, nil
@@ -52,6 +57,11 @@ func (sf *Screen) Redraw() {
 	if sf.isWork.Get() {
 		termbox.Flush()
 	}
+}
+
+// IsWork -- возвращает признак работы экрана
+func (sf *Screen) IsWork() bool {
+	return sf.isWork.Get()
 }
 
 // Clear -- очищает экран
@@ -65,6 +75,9 @@ func (sf *Screen) Close() {
 		return
 	}
 	sf.chClose <- 1
+	for sf.isWork.Get() {
+		time.Sleep(time.Millisecond * 5)
+	}
 }
 
 // Главный цикл работы экрана

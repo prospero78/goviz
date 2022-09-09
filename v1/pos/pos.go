@@ -1,4 +1,4 @@
-package goviz
+package pos
 
 // APosX -- позиция по Х
 type APosX int

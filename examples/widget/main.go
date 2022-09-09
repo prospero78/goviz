@@ -11,10 +11,11 @@ import (
 	"github.com/nsf/termbox-go"
 
 	"github.com/prospero78/goviz/v1"
+	"github.com/prospero78/goviz/v1/screen"
 )
 
 func main() {
-	screen, err := goviz.GetScreen()
+	screen, err :=screen.GetScreen()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)

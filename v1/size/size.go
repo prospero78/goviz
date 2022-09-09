@@ -1,4 +1,4 @@
-package goviz
+package size
 
 // ASizeX -- размер по Х
 type ASizeX int

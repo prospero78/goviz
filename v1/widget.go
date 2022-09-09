@@ -1,11 +1,16 @@
 package goviz
 
-import "github.com/nsf/termbox-go"
+import (
+	"github.com/nsf/termbox-go"
+	"github.com/prospero78/goviz/v1/lit"
+	"github.com/prospero78/goviz/v1/pos"
+	"github.com/prospero78/goviz/v1/size"
+)
 
 // Widget -- базовый виджет для отрисовки
 type Widget struct {
-	pos         Pos  // Позиция виджета на экране
-	size        Size // Размеры виджета
+	pos         pos.Pos  // Позиция виджета на экране
+	size        size.Size // Размеры виджета
 	foreAttr    termbox.Attribute
 	backAttr    termbox.Attribute
 	BorderLeft  Line // Левая граница виджета
@@ -17,17 +22,20 @@ type Widget struct {
 }
 
 // NewWidget -- возвращает новый виджет
-func NewWidget(posX APosX, posY APosY, sizeX ASizeX, sizeY ASizeY, foreAttr, backAttr termbox.Attribute, litFill ALit) *Widget {
+func NewWidget(posX pos.APosX, posY pos.APosY,
+	sizeX size.ASizeX, sizeY size.ASizeY,
+	foreAttr, backAttr termbox.Attribute,
+	litFill lit.ALit) *Widget {
 	var _litFill rune
 	if litFill == "" {
 		_litFill = []rune(" ")[0]
 	}
 	sf := &Widget{
-		pos: Pos{
+		pos: pos.Pos{
 			X: posX,
 			Y: posY,
 		},
-		size: Size{
+		size: size.Size{
 			X: sizeX,
 			Y: sizeY,
 		},
@@ -40,8 +48,8 @@ func NewWidget(posX APosX, posY APosY, sizeX ASizeX, sizeY ASizeY, foreAttr, bac
 
 // Redraw -- перерисовывает виджет на экране
 func (sf *Widget) Redraw() {
-	for x := sf.pos.X; x < sf.pos.X+APosX(sf.size.X); x++ {
-		for y := sf.pos.Y; y < APosY(sf.size.Y); y++ {
+	for x := sf.pos.X; x < sf.pos.X+pos.APosX(sf.size.X); x++ {
+		for y := sf.pos.Y; y < pos.APosY(sf.size.Y); y++ {
 			// OutLit(x, y, sf.foreAttr, sf.backAttr, sf.litFill)
 		}
 	}
@@ -49,11 +57,11 @@ func (sf *Widget) Redraw() {
 		return
 	}
 	// Прочертить верхнюю границу
-	for x := sf.pos.X; x < sf.pos.X+APosX(sf.size.X); x++ {
+	for x := sf.pos.X; x < sf.pos.X+pos.APosX(sf.size.X); x++ {
 		// OutLit(x, sf.pos.Y, sf.BorderFore, sf.BorderBack, []rune("#")[0])
 	}
 	// Прочертить нижнюю границу
-	for x := sf.pos.X; x < sf.pos.X+APosX(sf.size.X); x++ {
+	for x := sf.pos.X; x < sf.pos.X+pos.APosX(sf.size.X); x++ {
 		// OutLit(x, sf.pos.Y+APosY(sf.size.Y)-2, sf.BorderFore, sf.BorderBack, []rune("#")[0])
 	}
 }

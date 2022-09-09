@@ -1,8 +1,10 @@
-package goviz
+package ticker
 
 import (
 	"fmt"
 	"time"
+
+	"github.com/prospero78/goviz/v1/safebool"
 )
 
 // ATick -- интервал в миллисекундах
@@ -10,11 +12,11 @@ type ATick int
 
 // Ticker -- генерирует тики с заданным интервалом
 type Ticker struct {
-	val    ATick     // Интервал в миллисекундах
-	chTick chan int  // Канал для отсчёта тиков
-	isWork *SafeBool // Признак работы тикера
-	chEnd  chan int  // Признак окончания работы тикера
-	chWait chan int  // Канал ожидания вызова
+	val    ATick              // Интервал в миллисекундах
+	chTick chan int           // Канал для отсчёта тиков
+	isWork *safebool.SafeBool // Признак работы тикера
+	chEnd  chan int           // Признак окончания работы тикера
+	chWait chan int           // Канал ожидания вызова
 }
 
 // NewTicker -- возвращает новый тикер
@@ -25,7 +27,7 @@ func NewTicker(msec ATick) (*Ticker, error) {
 	sf := &Ticker{
 		val:    msec,
 		chTick: make(chan int, 2),
-		isWork: NewSafeBool(),
+		isWork: safebool.NewSafeBool(),
 		chEnd:  make(chan int, 2),
 		chWait: make(chan int, 1),
 	}

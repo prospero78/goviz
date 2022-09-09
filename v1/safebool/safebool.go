@@ -1,4 +1,4 @@
-package goviz
+package safebool
 
 import "sync"
 

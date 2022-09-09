@@ -4,6 +4,8 @@ import (
 	"fmt"
 
 	"github.com/nsf/termbox-go"
+	"github.com/prospero78/goviz/v1/lit"
+	"github.com/prospero78/goviz/v1/pos"
 )
 
 // ALen -- длина
@@ -20,14 +22,14 @@ const (
 // Line -- линия на экране
 type Line struct {
 	IsVisible bool    // Признак видимости линии
-	LitFill   *Lit    // Литера заполнителя
-	Pos       Pos     // Позиция линии
+	LitFill   *lit.Lit    // Литера заполнителя
+	Pos       pos.Pos     // Позиция линии
 	Len       ALen    // Длина линии
 	Direct    ADirect // Направление линии
 }
 
 // NewLine -- возвращает новую линию
-func NewLine(pos Pos, _len ALen, lit *Lit) (*Line, error) {
+func NewLine(pos pos.Pos, _len ALen, lit *lit.Lit) (*Line, error) {
 	if lit == nil {
 		return nil, fmt.Errorf("NewLine(): lit == nil")
 	}
@@ -52,8 +54,8 @@ func (sf *Line) Redraw() {
 func (sf *Line) redrawVert() {
 	_, scrY := termbox.Size()
 	sf.LitFill.Pos.X = sf.Pos.X
-	for y := sf.Pos.Y; y < APosY(sf.Len); y++ {
-		if y >= APosY(scrY) {
+	for y := sf.Pos.Y; y < pos.APosY(sf.Len); y++ {
+		if y >= pos.APosY(scrY) {
 			return
 		}
 		sf.LitFill.Pos.Y = y
@@ -65,8 +67,8 @@ func (sf *Line) redrawVert() {
 func (sf *Line) redrawHor() {
 	scrX, _ := termbox.Size()
 	sf.LitFill.Pos.Y = sf.Pos.Y
-	for x := sf.Pos.X; x < APosX(sf.Len); x++ {
-		if x >= APosX(scrX) {
+	for x := sf.Pos.X; x < pos.APosX(sf.Len); x++ {
+		if x >= pos.APosX(scrX) {
 			return
 		}
 		sf.LitFill.Pos.X = x
