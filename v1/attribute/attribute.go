@@ -5,6 +5,7 @@ import (
 	"sync"
 
 	"github.com/nsf/termbox-go"
+	"github.com/prospero78/goviz/v1/attribute/attr_blink"
 	"github.com/prospero78/goviz/v1/attribute/attr_bold"
 	"github.com/prospero78/goviz/v1/attribute/attr_dim"
 	"github.com/prospero78/goviz/v1/attribute/attr_italic"
@@ -22,6 +23,7 @@ type Attribute struct {
 	visible   types.IAttrVisible   // Признак видимости литеры
 	dimension types.IAttrDimension // Признак размера литеры
 	reverse   types.IAttrReverse   // Признак реверса литеры
+	blink     types.IAttrBlink     // Признак моргания литеры
 	fore      termbox.Attribute    // Атрибуты литеры
 	block     sync.Mutex           // Блокировка на атрибуты
 }
@@ -35,6 +37,7 @@ func NewAttribute(fore termbox.Attribute) *Attribute {
 		visible:   attr_visible.NewVisible(&fore),
 		dimension: attr_dim.NewDimension(&fore),
 		reverse:   attr_reverse.NewReverse(&fore),
+		blink: attr_blink.NewBlink(&fore),
 		fore:      fore,
 	}
 	return sf
@@ -45,6 +48,13 @@ func (sf *Attribute) ForeAttr() termbox.Attribute {
 	sf.block.Lock()
 	defer sf.block.Unlock()
 	return sf.fore
+}
+
+// Blink -- возвращает признак моргания литеры
+func (sf *Attribute) Blink() types.IAttrBlink {
+	sf.block.Lock()
+	defer sf.block.Unlock()
+	return sf.blink
 }
 
 // Reverse -- возвращает признак реверса литеры

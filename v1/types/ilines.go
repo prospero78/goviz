@@ -10,7 +10,7 @@ type ILines interface {
 	LitBeg() ILit
 	// LitEnd -- литера окончания линии
 	LitEnd() ILit
-	// ForeAttr -- возвращает атрибуты знакометста (из LitFill)
+	// ForeAttr -- возвращает атрибуты знакоместа (из LitFill)
 	ForeAttr()IAttr
 	// BackAttr -- возвращает объект фона знакоместа линии
 	BackAttr()IAttr

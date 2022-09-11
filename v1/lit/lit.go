@@ -5,6 +5,7 @@ import (
 
 	"github.com/nsf/termbox-go"
 	"github.com/prospero78/goviz/v1/alias"
+	"github.com/prospero78/goviz/v1/attribute"
 	"github.com/prospero78/goviz/v1/types"
 )
 
@@ -12,7 +13,7 @@ import (
 type Lit struct {
 	scr      types.IScreen
 	pos      types.IPos        // Позиция литеры на экране
-	ForeAttr termbox.Attribute // Атрибуты литеры
+	ForeAttr types.IAttr       // Атрибуты литеры
 	BackAttr termbox.Attribute // Атрибуты знакоместа
 	Lit      rune              // Литера для печати
 }
@@ -38,7 +39,7 @@ func NewLit(scr types.IScreen, pos types.IPos, foreAttr, backAttr termbox.Attrib
 	sf := &Lit{
 		scr:      scr,
 		pos:      pos,
-		ForeAttr: foreAttr,
+		ForeAttr: attribute.NewAttribute(foreAttr),
 		BackAttr: backAttr,
 		Lit:      _lit,
 	}
@@ -50,7 +51,7 @@ func (sf *Lit) Redraw() {
 	if sf.scr.IsWork() {
 		x, y := sf.pos.Get()
 		termbox.SetCell(int(x), int(y), sf.Lit,
-			sf.ForeAttr, sf.BackAttr)
+			sf.ForeAttr.ForeAttr(), sf.BackAttr)
 	}
 }
 
