@@ -9,3 +9,7 @@ const (
 	DirectHor  = alias.ADirect(iota) // Горизонтальное направление (слева направо)
 	DirectVert                       // Вертикальное направление (сверху вниз)
 )
+
+const ( // Стили границпрямоугольника
+	RectangleStyleNone= alias.ARectangleStyle(iota+2)
+)

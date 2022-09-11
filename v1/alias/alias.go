@@ -21,3 +21,6 @@ type ALen int
 
 // ADirect -- направление (горизонтальное/вертикальное)
 type ADirect int
+
+// ARectangleStyle -- стиль границ прямоугольника
+type ARectangleStyle int

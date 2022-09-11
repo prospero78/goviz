@@ -115,6 +115,30 @@ func main() {
 		rectangle.LitCornerRDSet(litCornRD)
 		rectangle.Redraw()
 	}
+	{ // Четвёртый прямоугольник (со стилем)
+		rectPos := pos.NewPos(4, 4)
+		rectSize, err := size.NewSize(20, 5)
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/maain(): in create rectSize, err=\n\t%w", err)
+			return
+		}
+		posLit := pos.NewPos(2, 5)
+		litFill, err := lit.NewLit(scr, posLit, termbox.ColorYellow, termbox.ColorLightGray, alias.ALit(rune(0x02591)))
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/maain(): in create litFill, err=\n\t%w", err)
+			return
+		}
+		rectangle, err := rectangle.NewRectangle(scr, rectPos, rectSize, litFill)
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/maain(): in create rectangle, err=\n\t%w", err)
+			return
+		}
+		// FIXME: прикрутить стиль границы
+		// rectStyle:=
+		rectangle.Redraw()
+		scr.Redraw()
+		time.Sleep(time.Second * 1)
+	}
 	scr.Redraw()
 	time.Sleep(time.Second * 3)
 }
