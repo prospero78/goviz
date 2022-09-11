@@ -28,18 +28,23 @@ func main() {
 		logrus.WithError(err).Errorln("free_pos_let: in create lit0")
 		return
 	}
+	lit0.ForeAttr.Bold().Set()
 	lit0.Redraw()
+
 	lit1, err := lit.NewLit(screen, pos.NewPos(4, 3), termbox.ColorWhite, termbox.ColorDefault, "5")
 	if err != nil {
 		logrus.WithError(err).Errorln("free_pos_let: in create lit1")
 		return
 	}
+	lit1.ForeAttr.Underline().Set()
 	lit1.Redraw()
+
 	lit2, err := lit.NewLit(screen, pos.NewPos(6, 4), termbox.ColorBlue, termbox.ColorDefault, "^")
 	if err != nil {
 		logrus.WithError(err).Errorln("free_pos_let: in create lit2")
 		os.Exit(1)
 	}
+	lit2.ForeAttr.Italic().Set()
 	lit2.Redraw()
 	screen.Redraw()
 

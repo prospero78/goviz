@@ -22,6 +22,13 @@ func main() {
 
 	screen.Clear()
 	strLit := string(rune(9618))
+
 	screen.Fill(strLit, termbox.ColorLightGreen, termbox.ColorBlack)
+	time.Sleep(time.Second * 1)
+
+	screen.Fill(strLit, termbox.ColorLightBlue, termbox.ColorBlack)
+	time.Sleep(time.Second * 1)
+
+	screen.Fill(strLit, termbox.ColorLightCyan, termbox.ColorBlack)
 	time.Sleep(time.Second * 3)
 }

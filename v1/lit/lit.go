@@ -51,7 +51,7 @@ func (sf *Lit) Redraw() {
 	if sf.scr.IsWork() {
 		x, y := sf.pos.Get()
 		termbox.SetCell(int(x), int(y), sf.Lit,
-			sf.ForeAttr.ForeAttr(), sf.BackAttr)
+			sf.ForeAttr.Get(), sf.BackAttr)
 	}
 }
 

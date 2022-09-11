@@ -33,6 +33,6 @@ func (sf *Italic) Set() {
 
 // Reset -- сбрасывает хранимый признак
 func (sf *Italic) Reset() {
-	*sf.attr = *sf.attr &^ termbox.AttrCursive
+	*sf.attr = *sf.attr & ^termbox.AttrCursive
 	sf.val = false
 }

@@ -63,6 +63,6 @@ type IAttr interface {
 	Dimension() IAttrDimension
 	// Reverse -- возвращает атрибут вывернутости на изнанку (???)
 	Reverse() IAttrReverse
-	// ForeAttr -- возвращает атрибуты литеры
-	ForeAttr() termbox.Attribute
+	// Get -- возвращает атрибуты литеры
+	Get() termbox.Attribute
 }

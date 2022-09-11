@@ -37,14 +37,14 @@ func NewAttribute(fore termbox.Attribute) *Attribute {
 		visible:   attr_visible.NewVisible(&fore),
 		dimension: attr_dim.NewDimension(&fore),
 		reverse:   attr_reverse.NewReverse(&fore),
-		blink: attr_blink.NewBlink(&fore),
+		blink:     attr_blink.NewBlink(&fore),
 		fore:      fore,
 	}
 	return sf
 }
 
-// ForeAttr -- возвращает атрибут литеры
-func (sf *Attribute) ForeAttr() termbox.Attribute {
+// Get -- возвращает атрибут литеры
+func (sf *Attribute) Get() termbox.Attribute {
 	sf.block.Lock()
 	defer sf.block.Unlock()
 	return sf.fore

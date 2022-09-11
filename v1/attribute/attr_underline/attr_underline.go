@@ -33,6 +33,6 @@ func (sf *Underline) Set() {
 
 // Reset -- сбрасывает хранимый признак
 func (sf *Underline) Reset() {
-	*sf.attr = *sf.attr &^ termbox.AttrUnderline
+	*sf.attr = *sf.attr & ^termbox.AttrUnderline
 	sf.val = false
 }
