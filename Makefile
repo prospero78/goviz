@@ -12,3 +12,5 @@ run.2:
 	go run ./examples/free_pos_string/main.go
 run.3:
 	go run ./examples/line/main.go
+run.4:
+	go run ./examples/rectangle/main.go

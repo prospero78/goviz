@@ -15,8 +15,8 @@ import (
 // Rectangle -- прямоугольник из линий
 type Rectangle struct {
 	scr      types.IScreen
-	LitFill  types.ILit     // Литера заливки прямоугольника
-	Pos      types.IPos    // Позиция левого верхнего угла
+	litFill  types.ILit     // Литера заливки прямоугольника
+	pos      types.IPos    // Позиция левого верхнего угла
 	Size     types.ISize   // Размеры прямоугольника
 	lstLines []types.ILine // Набор линий для заполнения прямоугольника
 	CornerLU types.ILit       // Литера верхнего левого угла
@@ -47,18 +47,20 @@ func NewRectangle(scr types.IScreen, _pos types.IPos, _size types.ISize, lit typ
 	}
 	sf := &Rectangle{
 		scr:      scr,
-		Pos:      _pos,
+		pos:      _pos,
 		lstLines: lstLines,
 	}
 	return sf, nil
 }
 
-// LitBeg -- возвращает литеру начала линии
-func (sf *Rectangle)LitBeg()types.ILit{
-	return sf.LitBeg()
+// LitFill -- возвращает литеру-заполнитель
+func (sf *Rectangle)LitFill()types.ILit{
+	return sf.litFill
 }
 
 // Redraw -- перерисовывает прямоугольник
 func (sf *Rectangle) Redraw() {
-
+	for _, line:=range sf.lstLines{
+		line.Redraw()
+	}
 }
