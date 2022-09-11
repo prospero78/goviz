@@ -27,10 +27,12 @@ func (sf *Italic) Get() bool {
 
 // Set -- устанавливает хранимый признак
 func (sf *Italic) Set() {
+	*sf.attr = *sf.attr | termbox.AttrCursive
 	sf.val = true
 }
 
 // Reset -- сбрасывает хранимый признак
 func (sf *Italic) Reset() {
+	*sf.attr = *sf.attr &^ termbox.AttrCursive
 	sf.val = false
 }

@@ -2,50 +2,67 @@ package types
 
 import "github.com/nsf/termbox-go"
 
-// IBold -- атрибут жирности литеры
-type IBold interface{
-	// Get -- возвращает признак жирности
-	Get()bool
+// IAttrLit -- базовый атрибут литеры
+type IAttrLit interface {
+	// Get -- возвращает хранимый атрибут признак
+	Get() bool
 	// Set -- устанавливает признак
 	Set()
 	// Reset -- сбросить признак
 	Reset()
 }
 
-// IItalic -- атрибут курсив литеры
-type IItalic interface{
-	// Get -- возвращает признак курсива
-	Get()bool
-	// Set -- устанавливает признак
-	Set()
-	// Reset -- сбросить признак
-	Reset()
+// IAttrBold -- атрибут жирности литеры
+type IAttrBold interface {
+	IAttrLit
 }
 
-// IUnderline -- атрибут подчёркнутости литеры
-type IUnderline interface{
-	// Get -- возвращает признак подчёркнутости
-	Get()bool
-	// Set -- устанавливает признак
-	Set()
-	// Reset -- сбросить признак
-	Reset()
+// IAttrItalic -- атрибут курсив литеры
+type IAttrItalic interface {
+	IAttrLit
 }
 
-// IAttr -- атрибуты литеры и фона
-type IAttr interface{
+// IAttrUnderline -- атрибут подчёркнутости литеры
+type IAttrUnderline interface {
+	IAttrLit
+}
+
+// IAttrBlink -- атрибут моргания литеры литеры
+type IAttrBlink interface {
+	IAttrLit
+}
+
+// IAttrVisible -- атрибут видимости литеры литеры
+type IAttrVisible interface {
+	IAttrLit
+}
+
+// IAttrDimension -- атрибут размера литеры литеры
+type IAttrDimension interface {
+	IAttrLit
+}
+
+// IAttrReverse -- атрибут реверса литеры литеры(???)
+type IAttrReverse interface {
+	IAttrLit
+}
+
+// IAttr -- атрибуты литеры
+type IAttr interface {
 	// Bold -- возвращает атрибут "жирноты"
-	Bold()IBold
+	Bold() IAttrBold
 	// Italic -- возвращает атрибут "курсив"
-	Italic()IItalic
+	Italic() IAttrItalic
 	// Underline -- возвращает атрибут "подчёркнуто"
-	Underline()IUnderline
+	Underline() IAttrUnderline
 	// Blink -- возвращает атрибут мерцания
+	Blink() IAttrBlink
 	// Visible -- возвращает атрибут видимости
+	Visible() IAttrVisible
 	// Dimension -- возвращает атрибут размера
+	Dimension() IAttrDimension
+	// Reverse -- возвращает атрибут вывернутости на изнанку (???)
+	Reverse() IAttrReverse
 	// ForeAttr -- возвращает атрибуты литеры
-	// Reverse -- возвращает атрибутвывернутости на изнанку
-	ForeAttr()termbox.Attribute
-	// BackAttr -- возвращает атрибуты фона
-	BackAttr()termbox.Attribute
+	ForeAttr() termbox.Attribute
 }

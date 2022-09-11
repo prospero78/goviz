@@ -27,10 +27,12 @@ func (sf *Bold) Get() bool {
 
 // Set -- устанавливает хранимый признак
 func (sf *Bold) Set() {
+	*sf.attr = *sf.attr | termbox.AttrBold
 	sf.val = true
 }
 
 // Reset -- сбрасывает хранимый признак
 func (sf *Bold) Reset() {
+	*sf.attr = *sf.attr &^ termbox.AttrBold
 	sf.val = false
 }
