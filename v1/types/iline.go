@@ -1,7 +1,9 @@
 package types
 
-// ILines -- интерфейс к линии
-type ILines interface {
+import "github.com/nsf/termbox-go"
+
+// ILine -- интерфейс к линии
+type ILine interface {
 	// Redraw -- перерисовывает линию
 	Redraw()
 	// LitFill -- литера заливки линии (также содержит ForeAttr)
@@ -11,7 +13,7 @@ type ILines interface {
 	// LitEnd -- литера окончания линии
 	LitEnd() ILit
 	// ForeAttr -- возвращает атрибуты знакоместа (из LitFill)
-	ForeAttr()IAttr
+	ForeAttr() IAttr
 	// BackAttr -- возвращает объект фона знакоместа линии
-	BackAttr()IAttr
+	BackAttr() termbox.Attribute
 }

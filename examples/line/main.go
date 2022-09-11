@@ -62,8 +62,8 @@ func main() {
 			logrus.WithError(err).Errorln("line: in create ILit")
 			return
 		}
-		line0.LitBegin = litBeg
-		line0.LitEnd = litEnd
+		line0.LitBeginSet(litBeg)
+		line0.LitEndSet(litEnd)
 		line0.Redraw()
 	}
 	{ // Третья линия
@@ -89,8 +89,8 @@ func main() {
 			logrus.WithError(err).Errorln("line: in create ILit")
 			return
 		}
-		line0.LitBegin = litBeg
-		line0.LitEnd = litEnd
+		line0.LitBeginSet(litBeg)
+		line0.LitEndSet(litEnd)
 		line0.Redraw()
 	}
 	screen.Redraw()

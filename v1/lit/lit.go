@@ -13,8 +13,8 @@ import (
 type Lit struct {
 	scr      types.IScreen
 	pos      types.IPos        // Позиция литеры на экране
-	ForeAttr types.IAttr       // Атрибуты литеры
-	BackAttr termbox.Attribute // Атрибуты знакоместа
+	foreAttr types.IAttr       // Атрибуты литеры
+	backAttr termbox.Attribute // Атрибуты знакоместа
 	Lit      rune              // Литера для печати
 }
 
@@ -39,11 +39,21 @@ func NewLit(scr types.IScreen, pos types.IPos, foreAttr, backAttr termbox.Attrib
 	sf := &Lit{
 		scr:      scr,
 		pos:      pos,
-		ForeAttr: attribute.NewAttribute(foreAttr),
-		BackAttr: backAttr,
+		foreAttr: attribute.NewAttribute(foreAttr),
+		backAttr: backAttr,
 		Lit:      _lit,
 	}
 	return sf, nil
+}
+
+// ForeAttr -- возвращает атрибуты литеры
+func (sf *Lit)ForeAttr()types.IAttr{
+	return sf.foreAttr
+}
+
+// BackAttr -- возвращает атрибуты фона
+func (sf *Lit) BackAttr() termbox.Attribute {
+	return sf.backAttr
 }
 
 // Redraw -- отрисовывает литеру на экране
@@ -51,7 +61,7 @@ func (sf *Lit) Redraw() {
 	if sf.scr.IsWork() {
 		x, y := sf.pos.Get()
 		termbox.SetCell(int(x), int(y), sf.Lit,
-			sf.ForeAttr.Get(), sf.BackAttr)
+			sf.ForeAttr().Get(), sf.backAttr)
 	}
 }
 
