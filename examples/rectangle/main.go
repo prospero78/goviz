@@ -81,11 +81,38 @@ func main() {
 			logrus.WithError(err).Errorln("rectangle.go/maain(): in create litFill, err=\n\t%w", err)
 			return
 		}
+		litCornLU, err := lit.NewLit(scr, posLit, termbox.ColorWhite, termbox.ColorGreen, "_")
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/maain(): in create litCornerLU, err=\n\t%w", err)
+			return
+		}
+		posRU:= pos.NewPos(2, 5)
+		litCornRU, err := lit.NewLit(scr, posRU, termbox.ColorWhite, termbox.ColorYellow, "*")
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/maain(): in create litCornerRU, err=\n\t%w", err)
+			return
+		}
+		posLD:= pos.NewPos(2, 5)
+		litCornLD, err := lit.NewLit(scr, posLD, termbox.ColorWhite, termbox.ColorRed, "x")
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/maain(): in create litCornerRU, err=\n\t%w", err)
+			return
+		}
+		posRD:= pos.NewPos(2, 5)
+		litCornRD, err := lit.NewLit(scr, posRD, termbox.ColorWhite, termbox.ColorRed, "#")
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/maain(): in create litCornerRU, err=\n\t%w", err)
+			return
+		}
 		rectangle, err := rectangle.NewRectangle(scr, rectPos, rectSize, litFill)
 		if err != nil {
 			logrus.WithError(err).Errorln("rectangle.go/maain(): in create rectangle, err=\n\t%w", err)
 			return
 		}
+		rectangle.LitCornerLUSet(litCornLU)
+		rectangle.LitCornerRUSet(litCornRU)
+		rectangle.LitCornerLDSet(litCornLD)
+		rectangle.LitCornerRDSet(litCornRD)
 		rectangle.Redraw()
 	}
 	scr.Redraw()

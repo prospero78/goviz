@@ -8,6 +8,8 @@ type ILit interface {
 	Redraw()
 	// Pos -- возвращает позицию литеры
 	Pos() IPos
+	// PosSet -- устанавливает позицию литеры
+	PosSet(IPos) error
 	// ForeAttr -- возвращает атрибуты литеры
 	ForeAttr() IAttr
 	// BackAttr -- возвращает атрибуты фона

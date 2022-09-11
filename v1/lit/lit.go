@@ -46,8 +46,18 @@ func NewLit(scr types.IScreen, pos types.IPos, foreAttr, backAttr termbox.Attrib
 	return sf, nil
 }
 
+// PosSet -- устанавливает позицию литеры
+func (sf *Lit) PosSet(pos types.IPos) error {
+	if pos == nil {
+		return fmt.Errorf("Lit.PosSet(): IPOs is nil")
+	}
+	sf.pos = pos
+	sf.Redraw()
+	return nil
+}
+
 // ForeAttr -- возвращает атрибуты литеры
-func (sf *Lit)ForeAttr()types.IAttr{
+func (sf *Lit) ForeAttr() types.IAttr {
 	return sf.foreAttr
 }
 
