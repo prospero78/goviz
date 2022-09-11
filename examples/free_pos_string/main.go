@@ -53,6 +53,7 @@ func main() {
 		foreAttr := attribute.NewAttribute(termbox.ColorBlue)
 		foreAttr.Blink().Set()
 		foreAttr.Underline().Set()
+		foreAttr.Dimension().Set()
 		str, err := tstring.NewTString(screen, _pos, foreAttr.Get(), termbox.ColorDefault, "Привет всем любителям пошкодить, отладить и погамать в WarZone2100!")
 		if err != nil {
 			logrus.WithError(err).Errorln("free_pos_string: in create TString")
