@@ -120,7 +120,7 @@ func (sf *Line) redrawVert() {
 
 // Перерисовывает линию горизонтально
 func (sf *Line) redrawHor() {
-	scrX, _ := termbox.Size()
+	scrX, _ := sf.scr.Size()
 	selfPosX := sf.pos.PosX()
 	selfPosY := sf.pos.PosY()
 	litPosX := sf.litFill.Pos().PosX()

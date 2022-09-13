@@ -120,19 +120,98 @@ func (sf *RectangleStyle) Redraw() {
 		sf.redrawCornes()
 	case cons.RectangleStyleSimple: // Простая граница
 		sf.redrawSimple()
+	case cons.RectangleStyleSingle: // Одиночная граница
+		sf.redrawSingle()
 	}
+}
+
+// Перерисовывает границу с одиночной линией
+func (sf *RectangleStyle) redrawSingle() {
+	{ // Верхняя граница
+		x := sf.pos.PosX().Get()
+		y := sf.pos.PosY().Get()
+		posLit := pos.NewPos(x, y)
+		sizeX := alias.ALen(sf.size.SizeX().Get())
+		// fmt.Printf("\nx=%v, y=%v, sizeX=%v\n", x, y, sizeX)
+		lit, _ := lit.NewLit(sf.scr, posLit, termbox.ColorWhite, termbox.ColorBlue, alias.ALit([]rune{9472}))
+		posLine := pos.NewPos(x, y)
+		lineUp, _ := line.NewLine(sf.scr, posLine, sizeX, lit)
+		lineUp.Redraw()
+	}
+	{ // Нижняя граница
+		x := sf.pos.PosX().Get()
+		y := sf.pos.PosY().Get() + alias.APosY(sf.size.SizeY().Get()) - 1
+		posLit := pos.NewPos(x, y)
+		sizeX := alias.ALen(sf.size.SizeX().Get())
+		lit, _ := lit.NewLit(sf.scr, posLit, termbox.ColorWhite, termbox.ColorBlue, alias.ALit([]rune{9472}))
+		posLine := pos.NewPos(x, y)
+		lineDown, _ := line.NewLine(sf.scr, posLine, sizeX, lit)
+		lineDown.Redraw()
+	}
+	{ // Левая граница
+		x := sf.pos.PosX().Get()
+		y := sf.pos.PosY().Get()
+		posLit := pos.NewPos(x, y)
+		sizeY := alias.ALen(sf.size.SizeY().Get())
+		lit, _ := lit.NewLit(sf.scr, posLit, termbox.ColorWhite, termbox.ColorBlue, alias.ALit([]rune{9474}))
+		posLine := pos.NewPos(x, y)
+		lineLeft, _ := line.NewLine(sf.scr, posLine, sizeY, lit)
+		lineLeft.Direct = cons.DirectVert
+		lineLeft.Redraw()
+	}
+	{ // Правая граница
+		x := sf.pos.PosX().Get() + alias.APosX(sf.size.SizeX().Get()) - 1
+		y := sf.pos.PosY().Get()
+		posLit := pos.NewPos(x, y)
+		sizeY := alias.ALen(sf.size.SizeY().Get())
+		lit, _ := lit.NewLit(sf.scr, posLit, termbox.ColorWhite, termbox.ColorBlue, alias.ALit([]rune{9474}))
+		posLine := pos.NewPos(x, y)
+		lineRight, _ := line.NewLine(sf.scr, posLine, sizeY, lit)
+		lineRight.Direct = cons.DirectVert
+		lineRight.Redraw()
+	}
+	// Прочертить угловые литеры
+	{ // LU
+		x := sf.pos.PosX().Get()
+		y := sf.pos.PosY().Get()
+		posLit := pos.NewPos(x, y)
+		sf.cornerLU, _ = lit.NewLit(sf.scr, posLit, termbox.ColorWhite, termbox.ColorBlue, alias.ALit([]rune{9484}))
+	}
+	{ // RU
+		x := sf.pos.PosX().Get() + alias.APosX(sf.size.SizeX().Get()) - 1
+		y := sf.pos.PosY().Get() //+alias.APosY(sf.size.SizeY().Get())
+		posLit := pos.NewPos(x, y)
+		sf.cornerRU, _ = lit.NewLit(sf.scr, posLit, termbox.ColorWhite, termbox.ColorBlue, alias.ALit([]rune{9488}))
+	}
+	{ // LD
+		x := sf.pos.PosX().Get()
+		y := sf.pos.PosY().Get() + alias.APosY(sf.size.SizeY().Get()) - 1
+		posLit := pos.NewPos(x, y)
+		sf.cornerLD, _ = lit.NewLit(sf.scr, posLit, termbox.ColorWhite, termbox.ColorBlue, alias.ALit([]rune{9492}))
+	}
+	{ // RD
+		x := sf.pos.PosX().Get() + alias.APosX(sf.size.SizeX().Get()) - 1
+		y := sf.pos.PosY().Get() + alias.APosY(sf.size.SizeY().Get()) - 1
+		posLit := pos.NewPos(x, y)
+		sf.cornerRD, _ = lit.NewLit(sf.scr, posLit, termbox.ColorWhite, termbox.ColorBlue, alias.ALit([]rune{9496}))
+	}
+	sf.redrawCornes()
 }
 
 // Перерисовывает границу по стилю фона верхнего левого угла
 func (sf *RectangleStyle) redrawSimple() {
 	if sf.cornerLU == nil {
-		sf.cornerLU, _ = lit.NewLit(sf.scr, sf.pos, termbox.ColorWhite, termbox.ColorBlue, " ")
+		x := sf.pos.PosX().Get()
+		y := sf.pos.PosY().Get()
+		pos := pos.NewPos(x, y)
+		sf.cornerLU, _ = lit.NewLit(sf.scr, pos, termbox.ColorWhite, termbox.ColorBlue, " ")
 	}
 	{ // Верхняя граница
 		x := sf.pos.PosX().Get()
 		y := sf.pos.PosY().Get()
 		pos := pos.NewPos(x, y)
-		lineUp, _ := line.NewLine(sf.scr, pos, alias.ALen(sf.size.SizeX().Get()), sf.cornerLU)
+		sizeX := alias.ALen(sf.size.SizeX().Get())
+		lineUp, _ := line.NewLine(sf.scr, pos, sizeX, sf.cornerLU)
 		lineUp.Redraw()
 	}
 	{ // Нижняя граница
@@ -142,6 +221,24 @@ func (sf *RectangleStyle) redrawSimple() {
 		sizeX := alias.ALen(sf.size.SizeX().Get())
 		lineDown, _ := line.NewLine(sf.scr, pos, sizeX, sf.cornerLU)
 		lineDown.Redraw()
+	}
+	{ // Левая граница
+		x := sf.pos.PosX().Get()
+		y := sf.pos.PosY().Get()
+		pos := pos.NewPos(x, y)
+		sizeY := alias.ALen(sf.size.SizeY().Get())
+		lineLeft, _ := line.NewLine(sf.scr, pos, sizeY, sf.cornerLU)
+		lineLeft.Direct = cons.DirectVert
+		lineLeft.Redraw()
+	}
+	{ // Правая граница
+		x := sf.pos.PosX().Get() + alias.APosX(sf.size.SizeX().Get()) - 1
+		y := sf.pos.PosY().Get() //+alias.APosY(sf.size.SizeY().Get())
+		pos := pos.NewPos(x, y)
+		sizeY := alias.ALen(sf.size.SizeY().Get())
+		lineRight, _ := line.NewLine(sf.scr, pos, sizeY, sf.cornerLU)
+		lineRight.Direct = cons.DirectVert
+		lineRight.Redraw()
 	}
 }
 
