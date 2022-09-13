@@ -9,6 +9,7 @@ import (
 	"github.com/nsf/termbox-go"
 
 	"github.com/prospero78/goviz/v1/alias"
+	"github.com/prospero78/goviz/v1/cons"
 	"github.com/prospero78/goviz/v1/lit"
 	"github.com/prospero78/goviz/v1/pos"
 	"github.com/prospero78/goviz/v1/rectangle"
@@ -20,7 +21,7 @@ import (
 func main() {
 	scr, err := screen.GetScreen()
 	if err != nil {
-		logrus.WithError(err).Errorln("rectangle.go/maain(): in get IScreen, err=\n\t%w", err)
+		logrus.WithError(err).Errorln("rectangle.go/main(): in get IScreen, err=\n\t%w", err)
 		return
 	}
 	defer scr.Close()
@@ -28,21 +29,21 @@ func main() {
 		rectPos := pos.NewPos(6, 6)
 		rectSize, err := size.NewSize(20, 5)
 		if err != nil {
-			logrus.WithError(err).Errorln("rectangle.go/maain(): in create rectSize, err=\n\t%w", err)
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create rectSize, err=\n\t%w", err)
 			return
 		}
 		posLit := pos.NewPos(2, 5)
 		litFill, err := lit.NewLit(scr, posLit, termbox.ColorCyan, termbox.ColorBlue, alias.ALit(rune(0x025e6)))
 		if err != nil {
-			logrus.WithError(err).Errorln("rectangle.go/maain(): in create litFill, err=\n\t%w", err)
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create litFill, err=\n\t%w", err)
 			return
 		}
-		rectangle, err := rectangle.NewRectangle(scr, rectPos, rectSize, litFill)
+		rectangle1, err := rectangle.NewRectangle(scr, rectPos, rectSize, litFill)
 		if err != nil {
-			logrus.WithError(err).Errorln("rectangle.go/maain(): in create rectangle, err=\n\t%w", err)
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create rectangle, err=\n\t%w", err)
 			return
 		}
-		rectangle.Redraw()
+		rectangle1.Redraw()
 		scr.Redraw()
 		time.Sleep(time.Second * 1)
 	}
@@ -50,21 +51,21 @@ func main() {
 		rectPos := pos.NewPos(4, 4)
 		rectSize, err := size.NewSize(20, 5)
 		if err != nil {
-			logrus.WithError(err).Errorln("rectangle.go/maain(): in create rectSize, err=\n\t%w", err)
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create rectSize, err=\n\t%w", err)
 			return
 		}
 		posLit := pos.NewPos(2, 5)
 		litFill, err := lit.NewLit(scr, posLit, termbox.ColorYellow, termbox.ColorLightGray, alias.ALit(rune(0x02591)))
 		if err != nil {
-			logrus.WithError(err).Errorln("rectangle.go/maain(): in create litFill, err=\n\t%w", err)
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create litFill, err=\n\t%w", err)
 			return
 		}
-		rectangle, err := rectangle.NewRectangle(scr, rectPos, rectSize, litFill)
+		rectangle2, err := rectangle.NewRectangle(scr, rectPos, rectSize, litFill)
 		if err != nil {
-			logrus.WithError(err).Errorln("rectangle.go/maain(): in create rectangle, err=\n\t%w", err)
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create rectangle, err=\n\t%w", err)
 			return
 		}
-		rectangle.Redraw()
+		rectangle2.Redraw()
 		scr.Redraw()
 		time.Sleep(time.Second * 1)
 	}
@@ -72,70 +73,120 @@ func main() {
 		rectPos := pos.NewPos(2, 2)
 		rectSize, err := size.NewSize(20, 5)
 		if err != nil {
-			logrus.WithError(err).Errorln("rectangle.go/maain(): in create rectSize, err=\n\t%w", err)
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create rectSize, err=\n\t%w", err)
 			return
 		}
 		posLit := pos.NewPos(2, 5)
-		litFill, err := lit.NewLit(scr, posLit, termbox.ColorLightGreen, termbox.ColorLightMagenta, alias.ALit(rune(0x025ec)))
+		litFill, err := lit.NewLit(scr, posLit, termbox.ColorLightGreen, termbox.ColorYellow, alias.ALit(rune(0x025ec)))
 		if err != nil {
-			logrus.WithError(err).Errorln("rectangle.go/maain(): in create litFill, err=\n\t%w", err)
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create litFill, err=\n\t%w", err)
 			return
 		}
-		litCornLU, err := lit.NewLit(scr, posLit, termbox.ColorWhite, termbox.ColorGreen, "_")
+		litCornLU, err := lit.NewLit(scr, posLit, termbox.ColorWhite, termbox.ColorLightCyan, "_")
 		if err != nil {
-			logrus.WithError(err).Errorln("rectangle.go/maain(): in create litCornerLU, err=\n\t%w", err)
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create litCornerLU, err=\n\t%w", err)
 			return
 		}
 		posRU:= pos.NewPos(2, 5)
 		litCornRU, err := lit.NewLit(scr, posRU, termbox.ColorWhite, termbox.ColorYellow, "*")
 		if err != nil {
-			logrus.WithError(err).Errorln("rectangle.go/maain(): in create litCornerRU, err=\n\t%w", err)
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create litCornerRU, err=\n\t%w", err)
 			return
 		}
 		posLD:= pos.NewPos(2, 5)
 		litCornLD, err := lit.NewLit(scr, posLD, termbox.ColorWhite, termbox.ColorRed, "x")
 		if err != nil {
-			logrus.WithError(err).Errorln("rectangle.go/maain(): in create litCornerRU, err=\n\t%w", err)
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create litCornerRU, err=\n\t%w", err)
 			return
 		}
 		posRD:= pos.NewPos(2, 5)
 		litCornRD, err := lit.NewLit(scr, posRD, termbox.ColorWhite, termbox.ColorRed, "#")
 		if err != nil {
-			logrus.WithError(err).Errorln("rectangle.go/maain(): in create litCornerRU, err=\n\t%w", err)
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create litCornerRU, err=\n\t%w", err)
 			return
 		}
-		rectangle, err := rectangle.NewRectangle(scr, rectPos, rectSize, litFill)
+		rectangle3, err := rectangle.NewRectangle(scr, rectPos, rectSize, litFill)
 		if err != nil {
-			logrus.WithError(err).Errorln("rectangle.go/maain(): in create rectangle, err=\n\t%w", err)
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create rectangle, err=\n\t%w", err)
 			return
 		}
-		rectangle.LitCornerLUSet(litCornLU)
-		rectangle.LitCornerRUSet(litCornRU)
-		rectangle.LitCornerLDSet(litCornLD)
-		rectangle.LitCornerRDSet(litCornRD)
-		rectangle.Redraw()
+		rectangle3.BorderStyle().LitCornerLUSet(litCornLU)
+		rectangle3.BorderStyle().LitCornerRUSet(litCornRU)
+		rectangle3.BorderStyle().LitCornerLDSet(litCornLD)
+		rectangle3.BorderStyle().LitCornerRDSet(litCornRD)
+		rectangle3.Redraw()
+		scr.Redraw()
+		time.Sleep(time.Second * 1)
 	}
 	{ // Четвёртый прямоугольник (со стилем)
-		rectPos := pos.NewPos(4, 4)
+		rectPos := pos.NewPos(30, 10)
 		rectSize, err := size.NewSize(20, 5)
 		if err != nil {
-			logrus.WithError(err).Errorln("rectangle.go/maain(): in create rectSize, err=\n\t%w", err)
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create rectSize, err=\n\t%w", err)
 			return
 		}
 		posLit := pos.NewPos(2, 5)
 		litFill, err := lit.NewLit(scr, posLit, termbox.ColorYellow, termbox.ColorLightGray, alias.ALit(rune(0x02591)))
 		if err != nil {
-			logrus.WithError(err).Errorln("rectangle.go/maain(): in create litFill, err=\n\t%w", err)
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create litFill, err=\n\t%w", err)
 			return
 		}
-		rectangle, err := rectangle.NewRectangle(scr, rectPos, rectSize, litFill)
+		litCornLU, err := lit.NewLit(scr, posLit, termbox.ColorWhite, termbox.ColorLightCyan, "_")
 		if err != nil {
-			logrus.WithError(err).Errorln("rectangle.go/maain(): in create rectangle, err=\n\t%w", err)
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create litCornerLU, err=\n\t%w", err)
 			return
 		}
-		// FIXME: прикрутить стиль границы
-		// rectStyle:=
-		rectangle.Redraw()
+		posRU:= pos.NewPos(2, 5)
+		litCornRU, err := lit.NewLit(scr, posRU, termbox.ColorWhite, termbox.ColorYellow, "*")
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create litCornerRU, err=\n\t%w", err)
+			return
+		}
+		posLD:= pos.NewPos(2, 5)
+		litCornLD, err := lit.NewLit(scr, posLD, termbox.ColorWhite, termbox.ColorRed, "x")
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create litCornerRU, err=\n\t%w", err)
+			return
+		}
+		posRD:= pos.NewPos(2, 5)
+		litCornRD, err := lit.NewLit(scr, posRD, termbox.ColorWhite, termbox.ColorRed, "#")
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create litCornerRU, err=\n\t%w", err)
+			return
+		}
+		rectangle4, err := rectangle.NewRectangle(scr, rectPos, rectSize, litFill)
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create rectangle, err=\n\t%w", err)
+			return
+		}
+		rectangle4.BorderStyle().LitCornerLUSet(litCornLU)
+		rectangle4.BorderStyle().LitCornerRUSet(litCornRU)
+		rectangle4.BorderStyle().LitCornerLDSet(litCornLD)
+		rectangle4.BorderStyle().LitCornerRDSet(litCornRD)
+		rectangle4.Redraw()
+		scr.Redraw()
+		time.Sleep(time.Second * 1)
+	}
+	{ // Пятый прямоугольник (с простым стилем)
+		rectPos := pos.NewPos(30, 17)
+		rectSize, err := size.NewSize(20, 5)
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create rectSize, err=\n\t%w", err)
+			return
+		}
+		posLit := pos.NewPos(2, 5)
+		litFill, err := lit.NewLit(scr, posLit, termbox.ColorYellow, termbox.ColorLightGray, alias.ALit(rune(0x02591)))
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create litFill, err=\n\t%w", err)
+			return
+		}
+		rectangle5, err := rectangle.NewRectangle(scr, rectPos, rectSize, litFill)
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create rectangle, err=\n\t%w", err)
+			return
+		}
+		rectangle5.BorderStyle().Set(cons.RectangleStyleSimple)
+		rectangle5.Redraw()
 		scr.Redraw()
 		time.Sleep(time.Second * 1)
 	}
