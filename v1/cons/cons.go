@@ -13,10 +13,6 @@ const (
 const ( // Стили границ прямоугольника
 	RectangleStyleNone       = alias.ARectangleStyle(iota + 2) // Нет никакого стиля, форма одежды №8 -- что надели, то и носим
 	RectangleStyleSimple                                       // Граница без заполнителя
-	RectangleStyleSingleVert                                   // Одиночная линия вертикально
-	RectangleStyleSingleHor                                    // Одиночная линия горизонтально
 	RectangleStyleSingle                                       // Одиночная линия по всему периметру
-	RectangleStyleDoubleVert                                   // Двойная линия вертикально
-	RectangleStyleDoubleHor                                    // Двойная линия горизонтально
 	RectangleStyleDouble                                       // Двойная линия по всему периметру
 )

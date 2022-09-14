@@ -211,6 +211,29 @@ func main() {
 		rectangle6.BorderStyle().Set(cons.RectangleStyleSingle)
 		rectangle6.Redraw()
 		scr.Redraw()
+		time.Sleep(time.Second * 1)
+	}
+	{ // Седьмой прямоугольник (с одиночной линией)
+		rectPos := pos.NewPos(55, 17)
+		rectSize, err := size.NewSize(20, 5)
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create rectSize, err=\n\t%w", err)
+			return
+		}
+		posLit := pos.NewPos(2, 5)
+		litFill, err := lit.NewLit(scr, posLit, termbox.ColorYellow, termbox.ColorLightGray, alias.ALit(rune(0x02591)))
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create litFill, err=\n\t%w", err)
+			return
+		}
+		rectangle6, err := rectangle.NewRectangle(scr, rectPos, rectSize, litFill)
+		if err != nil {
+			logrus.WithError(err).Errorln("rectangle.go/main(): in create rectangle, err=\n\t%w", err)
+			return
+		}
+		rectangle6.BorderStyle().Set(cons.RectangleStyleDouble)
+		rectangle6.Redraw()
+		scr.Redraw()
 		time.Sleep(time.Second * 3)
 	}
 	scr.Redraw()

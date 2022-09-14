@@ -15,6 +15,7 @@ import (
 type TString struct {
 	lstLit []types.ILit // Набор литер для вывода на экран
 	pos    types.IPos   // Позиция строки на экране
+	val    string       // Значение строки
 }
 
 // NewTString -- возвращает новую строку
@@ -29,7 +30,7 @@ func NewTString(scr types.IScreen, _pos types.IPos, foreAttr, backAttr termbox.A
 	}
 	lstLit := make([]types.ILit, 0)
 	posX, posY := _pos.Get()
-	ind:=0
+	ind := 0
 	for _, _rune := range strVal {
 		_pos := pos.NewPos(posX+alias.APosX(ind), posY)
 		lit, err := lit.NewLit(scr, _pos, foreAttr, backAttr, alias.ALit(_rune))
@@ -42,8 +43,14 @@ func NewTString(scr types.IScreen, _pos types.IPos, foreAttr, backAttr termbox.A
 	sf := &TString{
 		pos:    _pos,
 		lstLit: lstLit,
+		val:    strVal,
 	}
 	return sf, nil
+}
+
+// Get -- возвращает хранимое значение
+func (sf *TString) Get() string {
+	return sf.val
 }
 
 // Redraw -- перерисовывает строку на экране
